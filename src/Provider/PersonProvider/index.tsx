@@ -37,15 +37,13 @@ const personsContext = createContext<personsProviderData>(
 export const PersonsProvider = ({ children }: personsProviderProps) => {
   const [persons, setPersons] = useState([]);
 
-  //FAZER UM SELECTTOEDIT AQUI E DISPARAR ELE DENTRO DO CARD
-
   const listPersons = () => {
     api
       .get(`persons`)
       .then((response) => {
         setPersons(response.data);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {

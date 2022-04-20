@@ -6,7 +6,7 @@ export const PersonsFormContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   max-width: 800px;
-  height: 550px;
+  height: 600px;
   margin: 25px auto;
   padding: 15px;
   border-radius: 5px;

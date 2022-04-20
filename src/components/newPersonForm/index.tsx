@@ -14,7 +14,7 @@ const NewPersonForm = () => {
   const [nickname, setNickname] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
-  const [adress, setAdress] = useState("");
+  const [address, setAddress] = useState("");
   const [comments, setComments] = useState("");
   const [picture, setPicture] = useState("");
 
@@ -33,8 +33,8 @@ const NewPersonForm = () => {
   const handlePhone = (event: any) => {
     setPhone(event.target.value);
   };
-  const handleAdress = (event: any) => {
-    setAdress(event.target.value);
+  const handleAddress = (event: any) => {
+    setAddress(event.target.value);
   };
   const handleComments = (event: any) => {
     setComments(event.target.value);
@@ -49,7 +49,7 @@ const NewPersonForm = () => {
     nickname: nickname,
     gender: gender,
     phone: phone,
-    adress: adress,
+    address: address,
     comments: comments,
     profile_picture: picture,
   };
@@ -62,7 +62,7 @@ const NewPersonForm = () => {
       setNickname("");
       setGender("");
       setPhone("");
-      setAdress("");
+      setAddress("");
       setComments("");
       setPicture("");
     });
@@ -108,13 +108,13 @@ const NewPersonForm = () => {
         onChange={handlePhone}
       />
       <TextField
-        id="adress"
-        label="Adress"
+        id="address"
+        label="Address"
         variant="outlined"
         size="small"
         margin="none"
-        value={adress}
-        onChange={handleAdress}
+        value={address}
+        onChange={handleAddress}
       />
       <TextField
         id="comments"
@@ -122,6 +122,8 @@ const NewPersonForm = () => {
         variant="outlined"
         size="small"
         margin="none"
+        multiline
+        maxRows={4}
         value={comments}
         onChange={handleComments}
       />

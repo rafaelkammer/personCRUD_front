@@ -4,20 +4,24 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import api from "../../services/api";
 import { PersonsContainer } from "./style";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
+import { Dialog } from "@mui/material";
+import EditPersonForm from "../../components/editPersonForm";
 
 const ListPersonsPage = () => {
-  const history = useHistory();
   const { persons, listPersons } = usePersons();
+  const [personEdit, setPersonEdit] = useState({});
 
   const handleDeletePerson = (id: any) => {
     api.delete(`persons/${id}`).then((response) => listPersons());
   };
 
-  const handleEditPerson = (person: any) => {
-    // setEdit()
-    history.push("/edit");
+  const [openModal, setOpenModal] = useState(false);
+  const handleClickOpenModal = (person: any) => {
+    setPersonEdit(person);
+    setOpenModal(true);
   };
+  const handleClickCloseModal = () => setOpenModal(false);
 
   return (
     <>
@@ -25,7 +29,7 @@ const ListPersonsPage = () => {
       <PersonsContainer>
         <ul>
           {persons.map((person) => (
-            <li>
+            <li key={person.id}>
               <div>
                 <h3>{`Name: ${person.name}`}</h3>
                 <h3>{`Nickname: ${person.nickname}`}</h3>
@@ -38,11 +42,7 @@ const ListPersonsPage = () => {
                 <img src={person.profile_picture} alt={person.name} />
               </div>
               <div>
-                <button
-                  onClick={() => {
-                    handleEditPerson(person);
-                  }}
-                >
+                <button onClick={() => handleClickOpenModal(person)}>
                   <EditIcon />
                 </button>
                 <button
@@ -53,6 +53,12 @@ const ListPersonsPage = () => {
                   <DeleteForeverIcon />
                 </button>
               </div>
+              <Dialog open={openModal} onClose={handleClickCloseModal}>
+                <EditPersonForm
+                  person={personEdit}
+                  handleClickcloseModal={handleClickCloseModal}
+                />
+              </Dialog>
             </li>
           ))}
         </ul>

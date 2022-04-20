@@ -2,21 +2,18 @@ import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import { usePersons } from "../../Provider/PersonProvider";
 import api from "../../services/api";
-import { useHistory } from "react-router";
 import { PersonsFormContainer } from "./style";
 
-const EditPersonForm = () => {
-  const history = useHistory();
-
+const EditPersonForm = ({ handleClickcloseModal, person }: any) => {
   const { listPersons } = usePersons();
-  const [name, setName] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [gender, setGender] = useState("");
-  const [phone, setPhone] = useState("");
-  const [adress, setAdress] = useState("");
-  const [comments, setComments] = useState("");
-  const [picture, setPicture] = useState("");
+  const [name, setName] = useState(person.name);
+  const [cpf, setCpf] = useState(person.cpf);
+  const [nickname, setNickname] = useState(person.nickname);
+  const [gender, setGender] = useState(person.gender);
+  const [phone, setPhone] = useState(person.phone);
+  const [address, setAddress] = useState(person.address);
+  const [comments, setComments] = useState(person.comments);
+  const [picture, setPicture] = useState(person.profile_picture);
 
   const handleName = (event: any) => {
     setName(event.target.value);
@@ -33,8 +30,8 @@ const EditPersonForm = () => {
   const handlePhone = (event: any) => {
     setPhone(event.target.value);
   };
-  const handleAdress = (event: any) => {
-    setAdress(event.target.value);
+  const handleAddress = (event: any) => {
+    setAddress(event.target.value);
   };
   const handleComments = (event: any) => {
     setComments(event.target.value);
@@ -49,24 +46,16 @@ const EditPersonForm = () => {
     nickname: nickname,
     gender: gender,
     phone: phone,
-    adress: adress,
+    address: address,
     comments: comments,
     profile_picture: picture,
   };
 
-  const handleAddPerson = (PersonData: any) => {
-    api.post(`persons`, PersonData).then((response) => {
+  const handleEditPerson = (joinedData: any) => {
+    api.put(`persons/${person.id}`, joinedData).then((response) => {
       listPersons();
-      setName("");
-      setCpf("");
-      setNickname("");
-      setGender("");
-      setPhone("");
-      setAdress("");
-      setComments("");
-      setPicture("");
+      handleClickcloseModal();
     });
-    history.push("/list");
   };
 
   return (
@@ -108,13 +97,13 @@ const EditPersonForm = () => {
         onChange={handlePhone}
       />
       <TextField
-        id="adress"
-        label="Adress"
+        id="address"
+        label="Address"
         variant="outlined"
         size="small"
         margin="none"
-        value={adress}
-        onChange={handleAdress}
+        value={address}
+        onChange={handleAddress}
       />
       <TextField
         id="comments"
@@ -122,6 +111,8 @@ const EditPersonForm = () => {
         variant="outlined"
         size="small"
         margin="none"
+        multiline
+        maxRows={4}
         value={comments}
         onChange={handleComments}
       />
@@ -150,12 +141,12 @@ const EditPersonForm = () => {
       </Select>
       <Button
         onClick={() => {
-          handleAddPerson(joinedData);
+          handleEditPerson(joinedData);
         }}
         size="large"
         variant="contained"
       >
-        Add new Person
+        Update register
       </Button>
     </PersonsFormContainer>
   );

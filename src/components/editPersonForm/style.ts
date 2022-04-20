@@ -4,10 +4,9 @@ export const PersonsFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
-  max-width: 800px;
-  height: 550px;
-  margin: 25px auto;
+  width: 500px;
+  height: 600px;
+  margin: 0;
   padding: 15px;
   border-radius: 5px;
   background-color: var(--color-grey0);
